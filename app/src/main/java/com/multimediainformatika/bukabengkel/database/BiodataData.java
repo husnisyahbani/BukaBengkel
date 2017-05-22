@@ -5,7 +5,6 @@ package com.multimediainformatika.bukabengkel.database;
  */
 
 public class BiodataData {
-    public String no_paspor;
     public String nama;
     public String alamat;
     public String no_telp;

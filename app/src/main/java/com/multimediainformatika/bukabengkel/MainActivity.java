@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.multimediainformatika.bukabengkel.fragment.BiodataFragment;
 import com.multimediainformatika.bukabengkel.fragment.HomeFragment;
+import com.multimediainformatika.bukabengkel.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,8 +41,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            navigationView.setCheckedItem(R.id.nav_camera);
-            selectItem(R.id.nav_camera);
+            navigationView.setCheckedItem(R.id.nav_home);
+            selectItem(R.id.nav_home);
         }
 
     }
@@ -79,15 +82,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void selectItem(int id) {
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             fragment = HomeFragment.newInstance();
-            clearBackStack();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
+            Utils.pindahClear(this,fragment);
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_biodata) {
+            fragment = BiodataFragment.newInstance();
+            Utils.pindahClear(this,fragment);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

@@ -13,4 +13,10 @@
 
     <string name="action_settings">Settings</string>
     <string name="beli">BELI</string>
+
+    <string name="namalengkap">Nama Lengkap (Pasport)</string>
+    <string name="alamat">Alamat</string>
+    <string name="notelp">No. Telp</string>
+    <string name="email">Email</string>
+    <string name="submit">SUBMIT</string>
 </resources>

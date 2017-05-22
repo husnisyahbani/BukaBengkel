@@ -4,6 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
+import com.multimediainformatika.bukabengkel.MainActivity;
+import com.multimediainformatika.bukabengkel.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +28,32 @@ public class Utils {
         context.startActivity(launchBrowser);
     }
 
+    public static void pindah(MainActivity act, Fragment fragment)
+    {
+        FragmentManager fragmentManager = act
+                .getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+        transaction.addToBackStack(null)
+                .replace(R.id.frame_container, fragment).commit();
+    }
 
+    public static void pindahClear(MainActivity act, Fragment fragment)
+    {
+        clearBackStack(act);
+        FragmentManager fragmentManager = act
+                .getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+        transaction.replace(R.id.frame_container, fragment).commit();
+    }
+
+    private static void clearBackStack(MainActivity act) {
+        final FragmentManager fragmentManager = act.getSupportFragmentManager();
+        while (fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStackImmediate();
+        }
+    }
 
     public static final ProgressDialog makeProgressDialog(
             Context context) {
