@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/button_merah_radius"
+    android:layout_height="wrap_content"
+    android:layout_width="140dp">
+
+
+    <ImageView
+        android:id="@+id/imageMenu"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        app:srcCompat="@drawable/ic_motorreapir128" />
+
+    <TextView
+        android:id="@+id/textMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:text="BOOKING"
+        android:textColor="@android:color/white"
+        android:textSize="15sp" />
+</LinearLayout>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">BukaBengkel</string>
+    <string name="bookingavailable">Tanggal available booking paspor 5 hari terdekat.</string>
+    <string name="bookingnotavailable">* Bila tidak ada tanggal yang diinginkan, silahkan datang langsung ke Bengkel.</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="book">BOOKING</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="login">Login</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="beli">BELI</string>
+</resources>
