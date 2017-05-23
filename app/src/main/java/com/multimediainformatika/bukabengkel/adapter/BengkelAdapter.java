@@ -1,69 +1,107 @@
 package com.multimediainformatika.bukabengkel.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.database.Cursor;
+import android.location.Location;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.CursorAdapter;
 import com.multimediainformatika.bukabengkel.R;
-import com.multimediainformatika.bukabengkel.utils.OnButtonPressedListener;
-
-import java.util.List;
+import com.multimediainformatika.bukabengkel.database.Database;
 
 /**
  * Created by eksmud on 30/03/2017.
  */
 
-public class BengkelAdapter extends RecyclerView.Adapter<BengkelAdapter.BookingViewHolder>{
-    List<Bengkel> bengkel;
-    private static OnButtonPressedListener listener;
+public class BengkelAdapter extends CursorAdapter {
+    private LayoutInflater cursorInflater;
+    private Handler mHandler;
 
-    public BengkelAdapter(List<Bengkel> bengkel){
-        this.bengkel = bengkel;
-    }
-
-    public void setOnButtonPressedListener(OnButtonPressedListener listener) {
-        this.listener = listener;
-    }
-
-    @Override
-    public BookingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemlistbengkel, parent, false);
-        BookingViewHolder bookingViewHolder = new BookingViewHolder(v);
-        return bookingViewHolder;
+    public BengkelAdapter(Context context, Cursor cursor) {
+        super(context, cursor, true);
+        mHandler = new Handler();
+        cursorInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public void onBindViewHolder(final BookingViewHolder holder, int position) {
-        holder.textAlamat.setText(bengkel.get(position).alamat);
-        holder.textNama.setText(bengkel.get(position).nama);
-        holder.textJarak.setText(bengkel.get(position).jarak);
-
+    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
+        View rowView = cursorInflater.inflate(R.layout.itemlistbengkel,
+                viewGroup, false);
+        BengkelAdapter.ViewHolder holder = new BengkelAdapter.ViewHolder();
+        holder.textName = (TextView) rowView.findViewById(R.id.textNama);
+        holder.textAlamat = (TextView) rowView.findViewById(R.id.textAlamat);
+        holder.textJarak = (TextView) rowView.findViewById(R.id.textJarak);
+        rowView.setTag(holder);
+        return rowView;
     }
 
     @Override
-    public int getItemCount() {
-        return bengkel.size();
+    public void bindView(View view, Context context, Cursor cursor) {
+        BengkelAdapter.ViewHolder holder = (BengkelAdapter.ViewHolder) view.getTag();
+
+        final String textNama = cursor.getString(cursor
+                .getColumnIndex(Database.NAMA));
+        final String textAlamat = cursor.getString(cursor
+                .getColumnIndex(Database.ALAMAT));
+        final String textJarak = cursor.getString(cursor
+                .getColumnIndex(Database.JARAK));
+
+        holder.textName.setText(textNama);
+        holder.textAlamat.setText(textAlamat);
+        holder.textJarak.setText(textJarak);
     }
 
-    public static class BookingViewHolder extends RecyclerView.ViewHolder{
-        TextView textNama;
-        TextView textAlamat;
-        TextView textJarak;
 
-        public BookingViewHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+
+    public void refresh() {
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            notifyDataSetChanged();
+        } else {
+            mHandler.post(new Runnable() {
                 @Override
-                public void onClick(View view) {
-                    listener.onButtonPressedListener(view);
+                public void run() {
+                    notifyDataSetChanged();
                 }
             });
-            textNama = (TextView) itemView.findViewById(R.id.textNama);
-            textAlamat = (TextView) itemView.findViewById(R.id.textAlamat);
-            textJarak = (TextView) itemView.findViewById(R.id.textJarak);
+        }
+    }
+
+    class ViewHolder {
+        private TextView textName;
+        private TextView textAlamat;
+        private TextView textJarak;
+    }
+
+
+    private String getDistance(String latA, String longiA, String latB,
+                               String longiB) {
+        Location locationA = new Location("point A");
+        Location locationB = new Location("point B");
+        locationA.setLatitude(Double.parseDouble(latA));
+        locationA.setLongitude(Double.parseDouble(longiA));
+        locationB.setLatitude(Double.parseDouble(latB));
+        locationB.setLongitude(Double.parseDouble(longiB));
+
+        double distance = locationA.distanceTo(locationB);
+        distance = distance / 1000.0;
+
+        String hasil = Double.toString(distance);
+        int index = hasil.indexOf('.');
+
+        if (index > 0) {
+            String koma = hasil.substring(index + 1);
+            if (koma.length() > 2) {
+                return hasil.substring(0, index) + "." + koma.substring(0, 2);
+            } else {
+                return hasil.substring(0, index) + "." + koma;
+            }
+
+        } else {
+            return hasil;
         }
     }
 }

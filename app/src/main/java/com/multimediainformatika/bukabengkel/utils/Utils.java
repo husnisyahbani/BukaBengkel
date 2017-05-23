@@ -3,6 +3,7 @@ package com.multimediainformatika.bukabengkel.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -126,6 +127,34 @@ public class Utils {
         Date d1 = input1.getTime();
         Date d2 = input2.getTime();
         return (d2.getTime()-d1.getTime())/1000;
+    }
+
+    public static String getDistance(String latA, String longiA, String latB,
+                               String longiB) {
+        Location locationA = new Location("point A");
+        Location locationB = new Location("point B");
+        locationA.setLatitude(Double.parseDouble(latA));
+        locationA.setLongitude(Double.parseDouble(longiA));
+        locationB.setLatitude(Double.parseDouble(latB));
+        locationB.setLongitude(Double.parseDouble(longiB));
+
+        double distance = locationA.distanceTo(locationB);
+        distance = distance / 1000.0;
+
+        String hasil = Double.toString(distance);
+        int index = hasil.indexOf('.');
+
+        if (index > 0) {
+            String koma = hasil.substring(index + 1);
+            if (koma.length() > 2) {
+                return hasil.substring(0, index) + "." + koma.substring(0, 2);
+            } else {
+                return hasil.substring(0, index) + "." + koma;
+            }
+
+        } else {
+            return hasil;
+        }
     }
 
 }

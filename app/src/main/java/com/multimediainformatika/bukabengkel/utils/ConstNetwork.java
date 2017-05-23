@@ -7,4 +7,7 @@ package com.multimediainformatika.bukabengkel.utils;
 public class ConstNetwork {
     public static String URLPRODUK="https://api.bukalapak.com/v2/products.json";
     public static String LOGIN = "https://api.bukalapak.com/v2/authenticate.json";
+    public static String URLBENGKEL = "http://103.236.201.231/bukabengkel/api/bengkel";
+    public static String USERNAME = "husnibukabengkel";
+    public static String PASSWORD = "buka123xyz";
 }

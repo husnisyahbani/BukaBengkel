@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.multimediainformatika.bukabengkel.R;
 import com.multimediainformatika.bukabengkel.database.BiodataData;
@@ -58,9 +57,6 @@ public class BiodataFragment extends Fragment{
             }
         });
 
-
-
-
         return v;
     }
 
@@ -74,9 +70,11 @@ public class BiodataFragment extends Fragment{
 
             BiodataDatabase.saveBiodata(getActivity(),data);
 
-           // startActivity(new Intent(getActivity(),MainActivity.class));
+            MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("PERHATIAN","Biodata Berhasil Tersimpan");
+            frg.show(getFragmentManager(),"ALERT");
         }else{
-            Toast.makeText(getActivity(),"Mohon Lengkapi Data Anda",Toast.LENGTH_LONG).show();
+            MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("PERHATIAN","Mohon Lengkapi Data Anda");
+            frg.show(getFragmentManager(),"ALERT");
         }
     }
 

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.auth.BasicHandle;
@@ -18,7 +17,6 @@ import com.multimediainformatika.bukabengkel.Belanja;
 import com.multimediainformatika.bukabengkel.R;
 import com.multimediainformatika.bukabengkel.database.Session;
 import com.multimediainformatika.bukabengkel.database.SessionData;
-import com.multimediainformatika.bukabengkel.utils.ConstNetwork;
 import com.multimediainformatika.bukabengkel.utils.Utils;
 
 import org.json.JSONException;
@@ -51,7 +49,8 @@ public class LoginFragment extends Fragment {
                 if(!isEmpty(username,password)){
                     loginToServer(username.getText().toString(),password.getText().toString());
                 }else{
-                    Toast.makeText(getActivity(), "Username dan Password tidak boleh kosong ", Toast.LENGTH_LONG).show();
+                    MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("PERHATIAN","Username dan Password tidak boleh kosong ");
+                    frg.show(getFragmentManager(),"ALERT");
                 }
             }
         });
@@ -94,13 +93,16 @@ public class LoginFragment extends Fragment {
                             getActivity().finish();
                         } else {
                             String error = json.getString("message");
-                            Toast.makeText(getActivity(), "Login Gagal, "+error, Toast.LENGTH_LONG).show();
+                            MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("LOGIN GAGAL",error);
+                            frg.show(getFragmentManager(),"ALERT");
                         }
                     } catch (JSONException e) {
-                        Toast.makeText(getActivity(), "JSONException", Toast.LENGTH_LONG).show();
+                        MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("LOGIN GAGAL","JSONException");
+                        frg.show(getFragmentManager(),"ALERT");
                     }
                 }else{
-                    Toast.makeText(getActivity(), "Kosong ", Toast.LENGTH_LONG).show();
+                    MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("LOGIN GAGAL","Kosong");
+                    frg.show(getFragmentManager(),"ALERT");
                 }
             }
         });
