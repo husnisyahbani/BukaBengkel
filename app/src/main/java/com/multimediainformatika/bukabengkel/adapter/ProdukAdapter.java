@@ -41,7 +41,7 @@ public class ProdukAdapter extends CursorAdapter {
                 viewGroup, false);
         ViewHolder holder = new ViewHolder();
         holder.textName = (TextView) rowView.findViewById(R.id.textNama);
-        holder.textDesc = (TextView) rowView.findViewById(R.id.textDeskripsi);
+        //holder.textDesc = (TextView) rowView.findViewById(R.id.textDeskripsi);
         holder.textPrice = (TextView) rowView.findViewById(R.id.textharga);
         holder.buttonBeli = (Button) rowView.findViewById(R.id.buttonBeli);
         holder.imageProduk = (ImageView) rowView.findViewById(R.id.imageProduk);
@@ -55,8 +55,8 @@ public class ProdukAdapter extends CursorAdapter {
 
         final String textNama = cursor.getString(cursor
                 .getColumnIndex(Database.NAMA));
-        final String textDesc = cursor.getString(cursor
-                .getColumnIndex(Database.DESKRIPSI));
+//        final String textDesc = cursor.getString(cursor
+//                .getColumnIndex(Database.DESKRIPSI));
         final String textPrice = cursor.getString(cursor
                 .getColumnIndex(Database.PRICE));
         final String textImage = cursor.getString(cursor
@@ -64,14 +64,14 @@ public class ProdukAdapter extends CursorAdapter {
 
         Produk produk = new Produk();
         produk.name = textNama;
-        produk.desc = textDesc;
+       // produk.desc = textDesc;
         produk.price = textPrice;
         produk.image = textImage;
 
         AQuery aq = new AQuery(view);
         holder.buttonBeli.setTag(produk);
         holder.textName.setText(textNama);
-        holder.textDesc.setText(Html.fromHtml(textDesc));
+       // holder.textDesc.setText(Html.fromHtml(textDesc));
         holder.textPrice.setText(textPrice);
         aq.id(holder.imageProduk).image(textImage);
 
@@ -104,7 +104,7 @@ public class ProdukAdapter extends CursorAdapter {
 
     class ViewHolder {
         private TextView textName;
-        private TextView textDesc;
+       // private TextView textDesc;
         private TextView textPrice;
         private Button buttonBeli;
         private ImageView imageProduk;

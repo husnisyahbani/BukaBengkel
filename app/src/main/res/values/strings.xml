@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BukaBengkel</string>
-    <string name="bookingavailable">Tanggal available booking paspor 5 hari terdekat.</string>
+    <string name="bookingavailable">Tanggal available booking service 5 hari terdekat.</string>
     <string name="bookingnotavailable">* Bila tidak ada tanggal yang diinginkan, silahkan datang langsung ke Bengkel.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -18,5 +18,9 @@
     <string name="alamat">Alamat</string>
     <string name="notelp">No. Telp</string>
     <string name="email">Email</string>
+    <string name="plat">No Plat Kendaraan</string>
     <string name="submit">SUBMIT</string>
+    <string name="clickable">Clickable</string>
+    <string name="switch_image">Switch Image</string>
+    <string name="transparency">Transparency</string>
 </resources>

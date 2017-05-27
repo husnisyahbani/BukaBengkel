@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -69,16 +71,16 @@ public class ListBengkelMobilFragment extends ListFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.listbengkelmobilfragment, container, false);
-        data = database.getBengkel();
+        //data = database.getBengkelMobil();
         adapter = new BengkelAdapter(getActivity(),data);
         setListAdapter(adapter);
-        updateToServer("1","-2.9560534","104.7462008");
+        updateToServer("2","-2.9560534","104.7462008");
         return v;
     }
 
     private void updateToServer(String jenis, final String lat, final String longi)
     {
-        database.deleteBengkel();
+
         final AQuery aq = new AQuery(getActivity());
         BasicHandle handle = new BasicHandle(ConstNetwork.USERNAME,ConstNetwork.PASSWORD);
 
@@ -90,10 +92,12 @@ public class ListBengkelMobilFragment extends ListFragment {
                     try {
                         boolean statusOut = json.getBoolean("status");
                         if(statusOut) {
+                            database.deleteBengkel();
                             JSONArray result = json.getJSONArray("result");
                             for (int i = 0; i < result.length(); i++) {
                                 JSONObject dataRow = result.getJSONObject(i);
                                 Bengkel tmp = new Bengkel();
+                                tmp.id_bengkel = dataRow.getString("id_bengkel");
                                 tmp.nama = dataRow.getString("nama");
                                 tmp.alamat = dataRow.getString("alamat");
                                 String latA = dataRow.getString("lat");
@@ -101,10 +105,10 @@ public class ListBengkelMobilFragment extends ListFragment {
 
                                 String jarak = Utils.getDistance(latA,longiA,lat,longi);
                                 tmp.jarak = jarak;
-                                tmp.jenis = 1;
+                                tmp.jenis = 2;
 
                                 database.insertBengkel(tmp);
-                                data = database.getBengkel();
+                                data = database.getBengkelMobil();
                                 adapter.changeCursor(data);
                                 adapter.refresh();
                             }
@@ -120,5 +124,22 @@ public class ListBengkelMobilFragment extends ListFragment {
         });
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Cursor cursor = (Cursor) adapter.getItem(position);
+        String nama = cursor.getString(cursor.getColumnIndex(Database.NAMA));
+        String alamat = cursor.getString(cursor.getColumnIndex(Database.ALAMAT));
+        String id_bengkel = cursor.getString(cursor.getColumnIndex(Database.ID_BENGKEL));
 
+        Intent go = new Intent(getActivity(),Booking.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("NAMA",nama);
+        bundle.putString("ALAMAT",alamat);
+        bundle.putString("ID_BENGKEL",id_bengkel);
+
+        go.putExtras(bundle);
+        startActivity(go);
+    }
 }

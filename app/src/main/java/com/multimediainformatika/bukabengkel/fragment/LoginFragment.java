@@ -17,6 +17,7 @@ import com.multimediainformatika.bukabengkel.Belanja;
 import com.multimediainformatika.bukabengkel.R;
 import com.multimediainformatika.bukabengkel.database.Session;
 import com.multimediainformatika.bukabengkel.database.SessionData;
+import com.multimediainformatika.bukabengkel.utils.ConstNetwork;
 import com.multimediainformatika.bukabengkel.utils.Utils;
 
 import org.json.JSONException;
@@ -74,7 +75,7 @@ public class LoginFragment extends Fragment {
         Map<String, Object> params = new HashMap<String, Object>();
 
 
-        aq.auth(handle).progress(Utils.makeProgressDialog(getActivity())).ajax("https://api.bukalapak.com/v2/authenticate.json",params, JSONObject.class, new AjaxCallback<JSONObject>() {
+        aq.auth(handle).progress(Utils.makeProgressDialog(getActivity())).ajax(ConstNetwork.LOGIN,params, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject json, AjaxStatus status) {
                 if (json != null) {

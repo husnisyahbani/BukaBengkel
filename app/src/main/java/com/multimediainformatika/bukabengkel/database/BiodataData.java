@@ -9,4 +9,6 @@ public class BiodataData {
     public String alamat;
     public String no_telp;
     public String email;
+    public String token;
+    public String id_users;
 }

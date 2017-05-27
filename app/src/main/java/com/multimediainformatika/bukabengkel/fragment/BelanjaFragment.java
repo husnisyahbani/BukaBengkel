@@ -3,18 +3,16 @@ package com.multimediainformatika.bukabengkel.fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.multimediainformatika.bukabengkel.AppMain;
-import com.multimediainformatika.bukabengkel.R;
 import com.multimediainformatika.bukabengkel.adapter.Produk;
 import com.multimediainformatika.bukabengkel.adapter.ProdukAdapter;
 import com.multimediainformatika.bukabengkel.database.Database;
@@ -34,6 +32,15 @@ public class BelanjaFragment extends ListFragment implements OnButtonPressedList
     private AppMain main;
     private Cursor data;
     private ProdukAdapter adapter;
+    private AQuery aq;
+    private boolean first;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        aq = new AQuery(getActivity());
+        Log.e("HUSNI","onCreate");
+    }
 
     @Override
     public void onAttach(Context activity) {
@@ -41,23 +48,34 @@ public class BelanjaFragment extends ListFragment implements OnButtonPressedList
         super.onAttach(activity);
         main = (AppMain) getActivity().getApplication();
         database = main.getDatabase();
+        Log.e("HUSNI","onAttach");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.belanja_fragment, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         data = database.getProduk();
         adapter = new ProdukAdapter(getActivity(), data);
         adapter.setOnButtonPressedListener(BelanjaFragment.this);
         setListAdapter(adapter);
-        updateToServer();
-        return v;
+        if(!first){
+            updateToServer();
+
+        }
+        Log.e("HUSNI","onActivityCreated");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && first) {
+            Log.e("HUSNI","setUserVisibleHint");
+            updateToServer();
+        }
     }
 
     private void updateToServer()
     {
-        final AQuery aq = new AQuery(getActivity());
         aq.ajax(ConstNetwork.URLPRODUK, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject json, AjaxStatus status) {
@@ -80,6 +98,7 @@ public class BelanjaFragment extends ListFragment implements OnButtonPressedList
                                 data = database.getProduk();
                                 adapter.changeCursor(data);
                                 adapter.refresh();
+                                first = true;
                             }
 
                         }else{

@@ -103,6 +103,17 @@ public class Utils {
         return currentDateandTime;
     }
 
+    public static String getTime(int i)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.add(Calendar.DATE,i);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        String currentDateandTime = sdf.format(cal.getTime());
+        return currentDateandTime;
+    }
+
     public static Calendar getCalendarTimeNow()
     {
         Calendar cal = Calendar.getInstance();

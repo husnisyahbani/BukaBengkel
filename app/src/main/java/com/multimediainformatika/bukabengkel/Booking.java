@@ -1,5 +1,6 @@
 package com.multimediainformatika.bukabengkel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import java.util.List;
 public class Booking extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String nama,alamat,id_bengkel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,13 @@ public class Booking extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("BOOKING");
 
+        Intent go = getIntent();
+        Bundle dataPass = go.getExtras();
+        nama = dataPass.getString("NAMA");
+        alamat = dataPass.getString("ALAMAT");
+        id_bengkel = dataPass.getString("ID_BENGKEL");
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -42,7 +50,7 @@ public class Booking extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(BookingFragment.newInstance(), "ANTRIAN");
+        adapter.addFragment(BookingFragment.newInstance(id_bengkel,nama,alamat), "ANTRIAN");
         adapter.addFragment(new RekapBookingFragment(), "REKAP");
         viewPager.setAdapter(adapter);
     }
