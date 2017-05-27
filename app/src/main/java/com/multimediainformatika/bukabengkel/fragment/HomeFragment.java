@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.multimediainformatika.bukabengkel.Belanja;
 import com.multimediainformatika.bukabengkel.Login;
 import com.multimediainformatika.bukabengkel.PanggilMontir;
+import com.multimediainformatika.bukabengkel.PanggilMontirNew;
 import com.multimediainformatika.bukabengkel.R;
 import com.multimediainformatika.bukabengkel.ServiceMobil;
 import com.multimediainformatika.bukabengkel.ServiceMotor;
@@ -134,7 +135,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             startActivity(new Intent(getActivity(), ServiceMotor.class));
         }else if(i == 2)
         {
-            startActivity(new Intent(getActivity(), PanggilMontir.class));
+            startActivity(new Intent(getActivity(), PanggilMontirNew.class));
         }else if(i == 3)
         {
             SessionData data = Session.getSession(getActivity());

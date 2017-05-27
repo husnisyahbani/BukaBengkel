@@ -35,11 +35,18 @@ public class BelanjaFragment extends ListFragment implements OnButtonPressedList
     private AQuery aq;
     private boolean first;
 
+    public static BelanjaFragment newInstance(String keyword) {
+        BelanjaFragment f = new BelanjaFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("KEYWORD", keyword);
+        f.setArguments(bundle);
+        return f;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         aq = new AQuery(getActivity());
-        Log.e("HUSNI","onCreate");
     }
 
     @Override
@@ -48,35 +55,34 @@ public class BelanjaFragment extends ListFragment implements OnButtonPressedList
         super.onAttach(activity);
         main = (AppMain) getActivity().getApplication();
         database = main.getDatabase();
-        Log.e("HUSNI","onAttach");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Bundle dataBundle = getArguments();
         data = database.getProduk();
         adapter = new ProdukAdapter(getActivity(), data);
         adapter.setOnButtonPressedListener(BelanjaFragment.this);
         setListAdapter(adapter);
         if(!first){
-            updateToServer();
+            updateToServer(dataBundle.getString("KEYWORD"));
 
         }
-        Log.e("HUSNI","onActivityCreated");
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && first) {
-            Log.e("HUSNI","setUserVisibleHint");
-            updateToServer();
+            Bundle dataBundle = getArguments();
+            updateToServer(dataBundle.getString("KEYWORD"));
         }
     }
 
-    private void updateToServer()
+    private void updateToServer(String keyword)
     {
-        aq.ajax(ConstNetwork.URLPRODUK, JSONObject.class, new AjaxCallback<JSONObject>() {
+        aq.ajax(ConstNetwork.URLPRODUK+"?category_id="+keyword, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject json, AjaxStatus status) {
 

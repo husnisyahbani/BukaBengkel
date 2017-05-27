@@ -41,8 +41,8 @@ public class Belanja extends AppCompatActivity{
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new BelanjaFragment(), "MOTOR");
-        adapter.addFragment(new BelanjaFragment(), "MOBIL");
+        adapter.addFragment(BelanjaFragment.newInstance("390"), "MOTOR");
+        adapter.addFragment(BelanjaFragment.newInstance("19"), "MOBIL");
         viewPager.setAdapter(adapter);
     }
 

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.multimediainformatika.bukabengkel.adapter.Antrian;
 import com.multimediainformatika.bukabengkel.adapter.Bengkel;
+import com.multimediainformatika.bukabengkel.adapter.Montir;
 import com.multimediainformatika.bukabengkel.adapter.Produk;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -17,7 +18,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class Database extends SQLiteAssetHelper {
     public static final String DATABASE_NAME = "bukabengkel.db";
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 9;
     public static final String ID = "_id";
 
     //PRODUK
@@ -39,9 +40,12 @@ public class Database extends SQLiteAssetHelper {
     public static final String FK_IDBENGKEL = "fk_idbengkel";
 
     public static final String ID_MONTIR = "id_montir";
+    public static final String LAT = "lat";
+    public static final String LONGI = "longi";
+    public static final String PESAN = "pesan";
 
 
-
+    public static final String TABLE_MONTIR = "montir";
     public static final String TABLE_PRODUK = "produk";
     public static final String TABLE_BENGKEL = "bengkel";
     public static final String TABLE_ANTRIAN = "antrian";
@@ -100,6 +104,16 @@ public class Database extends SQLiteAssetHelper {
         return mCursor;
     }
 
+    public Cursor getMontir() throws SQLException {
+        Cursor mCursor = db.query(true, TABLE_MONTIR, new String[]{ID,ID_MONTIR, LAT,
+                        LONGI,TANGGAL,PESAN, FK_IDUSERS}, null, null,
+                null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+
     public void insertAntrian(Antrian antrian) {
         SQLiteDatabase databaseInsert = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -134,6 +148,18 @@ public class Database extends SQLiteAssetHelper {
         databaseInsert.insert(TABLE_PRODUK, null, values);
     }
 
+    public void insertMontir(Montir montir) {
+        SQLiteDatabase databaseInsert = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ID_MONTIR, montir.id_montir);
+        values.put(LAT, montir.lat);
+        values.put(LONGI, montir.longi);
+        values.put(TANGGAL, montir.tanggal);
+        values.put(PESAN, montir.pesan);
+        values.put(FK_IDUSERS, montir.fk_idusers);
+        databaseInsert.insert(TABLE_MONTIR, null, values);
+    }
+
     public void deleteProduk() {
         SQLiteDatabase databaseDelete = this.getWritableDatabase();
         databaseDelete.delete(TABLE_PRODUK, null, null);
@@ -147,5 +173,10 @@ public class Database extends SQLiteAssetHelper {
     public void deleteAntrian() {
         SQLiteDatabase databaseDelete = this.getWritableDatabase();
         databaseDelete.delete(TABLE_ANTRIAN, null, null);
+    }
+
+    public void deleteMontir() {
+        SQLiteDatabase databaseDelete = this.getWritableDatabase();
+        databaseDelete.delete(TABLE_MONTIR, null, null);
     }
 }
