@@ -114,10 +114,12 @@ public class ListBengkelMobilFragment extends ListFragment {
                             }
 
                         }else{
-                            Toast.makeText(getActivity(), "Gagal", Toast.LENGTH_LONG).show();
+                            MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("PERHATIAN", "Gagal");
+                            frg.show(getFragmentManager(), "ALERT");
                         }
                     } catch (JSONException e) {
-                        Toast.makeText(getActivity(), "JSONException", Toast.LENGTH_LONG).show();
+                        MyAlertDialogFragment frg = MyAlertDialogFragment.newInstance("PERHATIAN", "JSONException");
+                        frg.show(getFragmentManager(), "ALERT");
                     }
                 }
             }
