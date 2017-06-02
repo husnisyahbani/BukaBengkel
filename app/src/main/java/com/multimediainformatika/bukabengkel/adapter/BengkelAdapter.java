@@ -77,31 +77,35 @@ public class BengkelAdapter extends CursorAdapter {
     }
 
 
-    private String getDistance(String latA, String longiA, String latB,
-                               String longiB) {
-        Location locationA = new Location("point A");
-        Location locationB = new Location("point B");
-        locationA.setLatitude(Double.parseDouble(latA));
-        locationA.setLongitude(Double.parseDouble(longiA));
-        locationB.setLatitude(Double.parseDouble(latB));
-        locationB.setLongitude(Double.parseDouble(longiB));
-
-        double distance = locationA.distanceTo(locationB);
-        distance = distance / 1000.0;
-
-        String hasil = Double.toString(distance);
-        int index = hasil.indexOf('.');
-
-        if (index > 0) {
-            String koma = hasil.substring(index + 1);
-            if (koma.length() > 2) {
-                return hasil.substring(0, index) + "." + koma.substring(0, 2);
-            } else {
-                return hasil.substring(0, index) + "." + koma;
-            }
-
-        } else {
-            return hasil;
-        }
-    }
+//    private String getDistance(String latA, String longiA, String latB,
+//                               String longiB) {
+//        Location locationA = new Location("point A");
+//        Location locationB = new Location("point B");
+//        locationA.setLatitude(Double.parseDouble(latA));
+//        locationA.setLongitude(Double.parseDouble(longiA));
+//        locationB.setLatitude(Double.parseDouble(latB));
+//        locationB.setLongitude(Double.parseDouble(longiB));
+//
+//        double distance = locationA.distanceTo(locationB);
+//        distance = distance / 1000.0;
+//
+//        if(distance <= 10) {
+//            String hasil = Double.toString(distance);
+//            int index = hasil.indexOf('.');
+//
+//            if (index > 0) {
+//                String koma = hasil.substring(index + 1);
+//                if (koma.length() > 2) {
+//                    return hasil.substring(0, index) + "." + koma.substring(0, 2);
+//                } else {
+//                    return hasil.substring(0, index) + "." + koma;
+//                }
+//
+//            } else {
+//                return hasil;
+//            }
+//        }else{
+//            return "";
+//        }
+//    }
 }

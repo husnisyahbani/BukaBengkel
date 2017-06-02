@@ -140,7 +140,7 @@ public class Utils {
         return (d2.getTime()-d1.getTime())/1000;
     }
 
-    public static String getDistance(String latA, String longiA, String latB,
+    public static double getDistance(String latA, String longiA, String latB,
                                String longiB) {
         Location locationA = new Location("point A");
         Location locationB = new Location("point B");
@@ -151,7 +151,19 @@ public class Utils {
 
         double distance = locationA.distanceTo(locationB);
         distance = distance / 1000.0;
+        return distance;
+    }
 
+    public static String secondToHours(int totalSecs){
+        int hours = totalSecs / 3600;
+        int minutes = (totalSecs % 3600) / 60;
+        int seconds = totalSecs % 60;
+
+        return String.format("%02d jam %02d menit %02d detik", hours, minutes, seconds);
+    }
+
+    public static String distanceToString( double distance)
+    {
         String hasil = Double.toString(distance);
         int index = hasil.indexOf('.');
 

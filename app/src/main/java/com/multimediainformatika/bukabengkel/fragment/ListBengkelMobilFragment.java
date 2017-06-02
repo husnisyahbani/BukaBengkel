@@ -3,18 +3,12 @@ package com.multimediainformatika.bukabengkel.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.auth.BasicHandle;
@@ -25,10 +19,8 @@ import com.multimediainformatika.bukabengkel.Booking;
 import com.multimediainformatika.bukabengkel.R;
 import com.multimediainformatika.bukabengkel.adapter.Bengkel;
 import com.multimediainformatika.bukabengkel.adapter.BengkelAdapter;
-import com.multimediainformatika.bukabengkel.adapter.Produk;
 import com.multimediainformatika.bukabengkel.database.Database;
 import com.multimediainformatika.bukabengkel.utils.ConstNetwork;
-import com.multimediainformatika.bukabengkel.utils.OnButtonPressedListener;
 import com.multimediainformatika.bukabengkel.utils.Utils;
 
 import org.json.JSONArray;
@@ -103,8 +95,11 @@ public class ListBengkelMobilFragment extends ListFragment {
                                 String latA = dataRow.getString("lat");
                                 String longiA = dataRow.getString("longi");
 
-                                String jarak = Utils.getDistance(latA,longiA,lat,longi);
-                                tmp.jarak = jarak;
+                                double jarak = Utils.getDistance(latA, longiA, lat, longi);
+                                if (jarak > 10.0) {
+                                    continue;
+                                }
+                                tmp.jarak = Utils.distanceToString(jarak);
                                 tmp.jenis = 2;
 
                                 database.insertBengkel(tmp);

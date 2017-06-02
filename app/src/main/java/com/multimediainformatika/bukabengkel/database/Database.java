@@ -18,10 +18,12 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class Database extends SQLiteAssetHelper {
     public static final String DATABASE_NAME = "bukabengkel.db";
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 11;
     public static final String ID = "_id";
 
     //PRODUK
+    public static final String EMAIL = "email";
+    public static final String TELP = "telp";
     public static final String NAMA = "nama";
     public static final String DESKRIPSI = "deskripsi";
     public static final String PRICE = "price";
@@ -76,7 +78,7 @@ public class Database extends SQLiteAssetHelper {
 
     public Cursor getBengkelMobil() throws SQLException {
         Cursor mCursor = db.query(true, TABLE_BENGKEL, new String[]{ID,ID_BENGKEL, NAMA,
-                        ALAMAT, JARAK,JENIS}, JENIS+"=?", new String[]{"2"},
+                        ALAMAT, JARAK,JENIS,EMAIL,TELP,LAT,LONGI}, JENIS+"=?", new String[]{"2"},
                 null, null, JARAK+" ASC", null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -86,7 +88,7 @@ public class Database extends SQLiteAssetHelper {
 
     public Cursor getBengkelMotor() throws SQLException {
         Cursor mCursor = db.query(true, TABLE_BENGKEL, new String[]{ID,ID_BENGKEL, NAMA,
-                        ALAMAT, JARAK,JENIS}, JENIS+"=?", new String[]{"1"},
+                        ALAMAT, JARAK,JENIS,EMAIL,TELP,LAT,LONGI}, JENIS+"=?", new String[]{"1"},
                 null, null, JARAK+" ASC", null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -135,6 +137,10 @@ public class Database extends SQLiteAssetHelper {
         values.put(ALAMAT, bengkel.alamat);
         values.put(JARAK, bengkel.jarak);
         values.put(JENIS, bengkel.jenis);
+        values.put(EMAIL, bengkel.email);
+        values.put(TELP, bengkel.telp);
+        values.put(LAT, bengkel.lat);
+        values.put(LONGI, bengkel.longi);
         databaseInsert.insert(TABLE_BENGKEL, null, values);
     }
 
